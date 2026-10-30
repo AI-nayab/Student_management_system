@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academix | Student Management System</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-logo">
+                    <i data-lucide="graduation-cap"></i>
+                </div>
+                <h2>Academix</h2>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <a href="#" class="menu-item active" data-target="dashboard">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="menu-item" data-target="students">
+                    <i data-lucide="users"></i>
+                    <span>Students Directory</span>
+                </a>
+                <a href="#" class="menu-item" data-target="add-student-tab">
+                    <i data-lucide="user-plus"></i>
+                    <span>Add Student</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <p>&copy; 2026 Academix Portal</p>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- Top Header Bar -->
+            <header class="top-header">
+                <div class="header-title">
+                    <h1 id="page-title">Dashboard</h1>
+                    <p id="page-subtitle" class="text-muted">Overview of school academic performance</p>
+                </div>
+                
+                <div class="header-actions">
+                    <!-- Theme Toggle -->
+                    <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Dark/Light Mode">
+                        <i data-lucide="moon" class="dark-icon"></i>
+                        <i data-lucide="sun" class="light-icon" style="display: none;"></i>
+                    </button>
+                    
+                    <div class="user-profile">
+                        <div class="profile-avatar">AD</div>
+                        <div class="profile-info">
+                            <span class="profile-name">Administrator</span>
+                            <span class="profile-role">Portal Staff</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dynamic Content Panels -->
+            <div class="content-body">
+                
+                <!-- 1. DASHBOARD VIEW -->
+                <section id="dashboard" class="content-panel active">
+                    <!-- Key Statistics Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon-wrapper blue">
+                                <i data-lucide="users"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3 id="stat-total-students">0</h3>
+                                <p>Total Students</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon-wrapper green">
+                                <i data-lucide="award"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3 id="stat-pass-rate">0%</h3>
+                                <p>Overall Pass Rate</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon-wrapper purple">
+                                <i data-lucide="trending-up"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3 id="stat-avg-percentage">0%</h3>
+                                <p>Average Score</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon-wrapper gold">
+                                <i data-lucide="crown"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3 id="stat-top-performer" class="text-truncate">N/A</h3>
+                                <p>Top Performer</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Insights & Class Breakdown -->
+                    <div class="dashboard-grid">
+                        <!-- Class Distribution -->
+                        <div class="dashboard-card class-card">
+                            <div class="card-header">
+                                <h3>Class Distribution</h3>
+                                <p class="text-muted">Total students registered per class</p>
+                            </div>
+                            <div class="card-body" id="class-distribution-list">
+                                <!-- Dynamically filled class bars -->
+                                <div class="empty-state">Loading distribution data...</div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Subject Performance -->
+                        <div class="dashboard-card subject-card">
+                            <div class="card-header">
+                                <h3>Academic Subject Averages</h3>
+                                <p class="text-muted">Class averages across core disciplines</p>
+                            </div>
+                            <div class="card-body" id="subject-performance-list">
+                                <div class="subject-stat">
+                                    <div class="subject-info">
+                                        <span>Mathematics</span>
+                                        <span id="avg-maths">0%</span>
+                                    </div>
+                                    <div class="progress-bar-wrapper">
+                                        <div class="progress-bar bg-blue" id="progress-maths" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="subject-stat">
+                                    <div class="subject-info">
+                                        <span>Science</span>
+                                        <span id="avg-science">0%</span>
+                                    </div>
+                                    <div class="progress-bar-wrapper">
+                                        <div class="progress-bar bg-green" id="progress-science" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="subject-stat">
+                                    <div class="subject-info">
+                                        <span>English Literature</span>
+                                        <span id="avg-english">0%</span>
+                                    </div>
+                                    <div class="progress-bar-wrapper">
+                                        <div class="progress-bar bg-purple" id="progress-english" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="subject-stat">
+                                    <div class="subject-info">
+                                        <span>History</span>
+                                        <span id="avg-history">0%</span>
+                                    </div>
+                                    <div class="progress-bar-wrapper">
+                                        <div class="progress-bar bg-orange" id="progress-history" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="subject-stat">
+                                    <div class="subject-info">
+                                        <span>Computer Science</span>
+                                        <span id="avg-cs">0%</span>
+                                    </div>
+                                    <div class="progress-bar-wrapper">
+                                        <div class="progress-bar bg-indigo" id="progress-cs" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. STUDENTS DIRECTORY VIEW -->
+                <section id="students" class="content-panel">
+                    <div class="table-container-card">
+                        <!-- Filters Header -->
+                        <div class="table-controls">
+                            <div class="search-box">
+                                <i data-lucide="search"></i>
+                                <input type="text" id="search-input" placeholder="Search by name or roll number...">
+                            </div>
+                            
+                            <div class="filter-box">
+                                <i data-lucide="filter"></i>
+                                <select id="class-filter">
+                                    <option value="">All Classes</option>
+                                    <!-- Options filled dynamically -->
+                                </select>
+                            </div>
+                            
+                            <button class="btn btn-primary" id="btn-open-add-student">
+                                <i data-lucide="plus"></i>
+                                <span>Add Student</span>
+                            </button>
+                        </div>
+                        
+                        <!-- Students Table -->
+                        <div class="table-wrapper">
+                            <table class="students-table" id="students-table">
+                                <thead>
+                                    <tr>
+                                        <th>Roll Number</th>
+                                        <th>Full Name</th>
+                                        <th>Email Address</th>
+                                        <th>Class/Grade</th>
+                                        <th>Pass Status</th>
+                                        <th>Percentage</th>
+                                        <th>Grade</th>
+                                        <th class="actions-header">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="students-table-body">
+                                    <!-- Rows populated dynamically -->
+                                    <tr>
+                                        <td colspan="8" class="loading-state">
+                                            <div class="spinner"></div>
+                                            <p>Loading student directory...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Table Empty State -->
+                        <div class="table-empty-state" id="table-empty-state" style="display: none;">
+                            <i data-lucide="users-round"></i>
+                            <h3>No students found</h3>
+                            <p>Try refining your search filter or add a new student record.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. ADD STUDENT FORM VIEW -->
+                <section id="add-student-tab" class="content-panel">
+                    <div class="form-container-card">
+                        <div class="card-header">
+                            <h2>Register New Student</h2>
+                            <p class="text-muted">Fill out the student details. Marks will be initialized to 0 and can be configured later.</p>
+                        </div>
+                        <form id="add-student-form" class="student-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="student-name">Full Name <span class="required">*</span></label>
+                                    <div class="input-wrapper">
+                                        <i data-lucide="user"></i>
+                                        <input type="text" id="student-name" required placeholder="e.g. John Doe">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="student-roll">Roll Number <span class="required">*</span></label>
+                                    <div class="input-wrapper">
+                                        <i data-lucide="hash"></i>
+                                        <input type="text" id="student-roll" required placeholder="e.g. S106">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="student-email">Email Address <span class="required">*</span></label>
+                                    <div class="input-wrapper">
+                                        <i data-lucide="mail"></i>
+                                        <input type="email" id="student-email" required placeholder="e.g. john.doe@school.edu">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="student-class">Class/Grade <span class="required">*</span></label>
+                                    <div class="input-wrapper">
+                                        <i data-lucide="book-open"></i>
+                                        <input type="text" id="student-class" required placeholder="e.g. Class A or Grade 10">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="reset" class="btn btn-secondary">Clear Fields</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i data-lucide="check-circle-2"></i>
+                                    <span>Register Student</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+                
+            </div>
+        </main>
+    </div>
+
+    <!-- ================= MODALS ================= -->
+
+    <!-- 1. EDIT STUDENT DETAILS MODAL -->
+    <div class="modal-backdrop" id="edit-student-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Edit Student Details</h3>
+                <button class="modal-close" onclick="closeModal('edit-student-modal')">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-student-form" class="student-form">
+                    <input type="hidden" id="edit-student-id">
+                    
+                    <div class="form-group">
+                        <label for="edit-student-name">Full Name <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <i data-lucide="user"></i>
+                            <input type="text" id="edit-student-name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-student-roll">Roll Number <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <i data-lucide="hash"></i>
+                            <input type="text" id="edit-student-roll" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-student-email">Email Address <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <i data-lucide="mail"></i>
+                            <input type="email" id="edit-student-email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-student-class">Class/Grade <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <i data-lucide="book-open"></i>
+                            <input type="text" id="edit-student-class" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('edit-student-modal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. MANAGE MARKS MODAL -->
+    <div class="modal-backdrop" id="manage-marks-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <h3>Manage Subject Marks</h3>
+                    <p class="text-muted" id="marks-student-subheading">Update marks for Student</p>
+                </div>
+                <button class="modal-close" onclick="closeModal('manage-marks-modal')">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="manage-marks-form" class="student-form">
+                    <input type="hidden" id="marks-student-id">
+                    
+                    <div class="marks-input-grid">
+                        <div class="form-group">
+                            <label for="marks-maths">Mathematics (0-100) <span class="required">*</span></label>
+                            <input type="number" id="marks-maths" min="0" max="100" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="marks-science">Science (0-100) <span class="required">*</span></label>
+                            <input type="number" id="marks-science" min="0" max="100" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="marks-english">English (0-100) <span class="required">*</span></label>
+                            <input type="number" id="marks-english" min="0" max="100" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="marks-history">History (0-100) <span class="required">*</span></label>
+                            <input type="number" id="marks-history" min="0" max="100" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="marks-cs">Computer Science (0-100) <span class="required">*</span></label>
+                            <input type="number" id="marks-cs" min="0" max="100" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Live Calculations Summary -->
+                    <div class="marks-live-summary">
+                        <div class="summary-metric">
+                            <span class="label">Total Marks:</span>
+                            <span class="value" id="marks-live-total">0/500</span>
+                        </div>
+                        <div class="summary-metric">
+                            <span class="label">Percentage:</span>
+                            <span class="value" id="marks-live-percentage">0%</span>
+                        </div>
+                        <div class="summary-metric">
+                            <span class="label">Status:</span>
+                            <span class="badge" id="marks-live-status">Fail</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('manage-marks-modal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Marks</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. REPORT CARD MODAL -->
+    <div class="modal-backdrop" id="report-card-modal">
+        <div class="modal-card report-card-width">
+            <div class="modal-header hide-on-print">
+                <h3>Student Report Card</h3>
+                <div class="report-actions">
+                    <button class="btn btn-secondary btn-icon" onclick="window.print()" title="Print / PDF">
+                        <i data-lucide="printer"></i>
+                        <span>Print Report</span>
+                    </button>
+                    <button class="modal-close" onclick="closeModal('report-card-modal')">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="modal-body report-printable-area">
+                <!-- Report Card Design -->
+                <div class="report-document">
+                    <!-- Ribbon/Header -->
+                    <div class="report-header">
+                        <div class="report-logo">
+                            <i data-lucide="graduation-cap"></i>
+                        </div>
+                        <div class="school-details">
+                            <h2>ACADEMIX PREPARATORY HIGH</h2>
+                            <p>Official Academic Performance Statement</p>
+                        </div>
+                    </div>
+                    
+                    <hr class="report-divider">
+                    
+                    <!-- Student details info grid -->
+                    <div class="report-student-info">
+                        <div class="info-item">
+                            <span class="label">Student Name:</span>
+                            <span class="value" id="rc-student-name">Loading...</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Roll Number:</span>
+                            <span class="value" id="rc-student-roll">Loading...</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Class/Section:</span>
+                            <span class="value" id="rc-student-class">Loading...</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Academic Year:</span>
+                            <span class="value">2026-2027</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Performance Table -->
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th class="text-center">Max Marks</th>
+                                <th class="text-center">Min Passing Marks</th>
+                                <th class="text-center">Marks Obtained</th>
+                                <th class="text-center">Grade</th>
+                                <th class="text-center">Subject Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mathematics</td>
+                                <td class="text-center">100</td>
+                                <td class="text-center">35</td>
+                                <td class="text-center bold" id="rc-maths">-</td>
+                                <td class="text-center bold" id="rc-maths-grade">-</td>
+                                <td class="text-center"><span class="badge" id="rc-maths-status">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>Science</td>
+                                <td class="text-center">100</td>
+                                <td class="text-center">35</td>
+                                <td class="text-center bold" id="rc-science">-</td>
+                                <td class="text-center bold" id="rc-science-grade">-</td>
+                                <td class="text-center"><span class="badge" id="rc-science-status">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>English Literature</td>
+                                <td class="text-center">100</td>
+                                <td class="text-center">35</td>
+                                <td class="text-center bold" id="rc-english">-</td>
+                                <td class="text-center bold" id="rc-english-grade">-</td>
+                                <td class="text-center"><span class="badge" id="rc-english-status">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>History</td>
+                                <td class="text-center">100</td>
+                                <td class="text-center">35</td>
+                                <td class="text-center bold" id="rc-history">-</td>
+                                <td class="text-center bold" id="rc-history-grade">-</td>
+                                <td class="text-center"><span class="badge" id="rc-history-status">-</span></td>
+                            </tr>
+                            <tr>
+                                <td>Computer Science</td>
+                                <td class="text-center">100</td>
+                                <td class="text-center">35</td>
+                                <td class="text-center bold" id="rc-cs">-</td>
+                                <td class="text-center bold" id="rc-cs-grade">-</td>
+                                <td class="text-center"><span class="badge" id="rc-cs-status">-</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- Result Summary Block -->
+                    <div class="report-summary-block">
+                        <div class="summary-card">
+                            <span class="summary-label">Aggregated Total</span>
+                            <span class="summary-value" id="rc-total">- / 500</span>
+                        </div>
+                        <div class="summary-card">
+                            <span class="summary-label">Percentage</span>
+                            <span class="summary-value" id="rc-percentage">-%</span>
+                        </div>
+                        <div class="summary-card">
+                            <span class="summary-label">Letter Grade</span>
+                            <span class="summary-value" id="rc-grade">-</span>
+                        </div>
+                        <div class="summary-card result-status-card" id="rc-status-card">
+                            <span class="summary-label">Result Status</span>
+                            <span class="summary-value bold" id="rc-status">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Footer Signatures -->
+                    <div class="report-signatures">
+                        <div class="signature">
+                            <div class="signature-line"></div>
+                            <span>Class Teacher</span>
+                        </div>
+                        <div class="signature">
+                            <div class="signature-line"></div>
+                            <span>Academic Registrar</span>
+                        </div>
+                        <div class="signature">
+                            <div class="signature-stamp">
+                                <span>OFFICIAL</span>
+                                <span>SEAL</span>
+                            </div>
+                            <span>Institution Seal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. DELETE CONFIRMATION MODAL -->
+    <div class="modal-backdrop" id="delete-student-modal">
+        <div class="modal-card delete-card-width">
+            <div class="modal-header danger-header">
+                <h3>Confirm Student Deletion</h3>
+                <button class="modal-close" onclick="closeModal('delete-student-modal')">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="delete-warning-icon">
+                    <i data-lucide="alert-triangle"></i>
+                </div>
+                <h4 class="delete-warning-title">Are you absolutely sure?</h4>
+                <p class="text-muted">You are about to delete <strong id="delete-student-name-placeholder">-</strong> (Roll: <strong id="delete-student-roll-placeholder">-</strong>). This action will permanently remove their records, including all academic marks, and cannot be undone.</p>
+                
+                <input type="hidden" id="delete-student-id">
+                
+                <div class="modal-actions-centered">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('delete-student-modal')">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="btn-confirm-delete">Yes, Delete Record</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Toast Alert System Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- App Script -->
+    <script src="js/app.js"></script>
+</body>
+</html>
